@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QRForge | Smart QR Generator</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+  <div class="page">
+    <div class="app-card">
+      <div class="left-panel">
+        <h1>QRForge</h1>
+        <p class="subtitle">
+          Generate QR codes for text, links, notes, and more with a clean and modern experience.
+        </p>
+
+        <label for="qrInput">Enter text or URL</label>
+        <textarea id="qrInput" placeholder="Enter your text or website link here..."></textarea>
+
+        <div class="button-group">
+          <button class="primary-btn" id="generateBtn">Generate QR</button>
+          <button class="success-btn" id="downloadBtn">Download</button>
+          <button class="danger-btn" id="clearBtn">Clear</button>
+        </div>
+      </div>
+
+      <div class="right-panel">
+        <h2>QR Preview</h2>
+        <div id="qrcode"></div>
+        <p class="preview-text">Your generated QR code will appear here.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

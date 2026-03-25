@@ -1,0 +1,166 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+  color: white;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.app-card {
+  width: 100%;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 24px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+  padding: 24px;
+}
+
+.left-panel,
+.right-panel {
+  background: rgba(255,255,255,0.06);
+  border-radius: 20px;
+  padding: 24px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(56, 189, 248, 0.14);
+  color: #7dd3fc;
+  margin-bottom: 16px;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #dbeafe;
+  line-height: 1.7;
+  margin-bottom: 22px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+textarea {
+  width: 100%;
+  min-height: 170px;
+  resize: vertical;
+  border: none;
+  outline: none;
+  border-radius: 16px;
+  padding: 16px;
+  font-size: 15px;
+  background: rgba(255,255,255,0.12);
+  color: white;
+}
+
+textarea::placeholder {
+  color: #cbd5e1;
+}
+
+.button-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+button {
+  border: none;
+  outline: none;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+.primary-btn {
+  background: #38bdf8;
+  color: #082f49;
+}
+
+.success-btn {
+  background: #22c55e;
+  color: white;
+}
+
+.danger-btn {
+  background: #ef4444;
+  color: white;
+}
+
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 500px;
+  text-align: center;
+}
+
+.right-panel h2 {
+  margin-bottom: 18px;
+}
+
+#qrcode {
+  min-width: 290px;
+  min-height: 290px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.preview-text {
+  margin-top: 18px;
+  color: #dbeafe;
+}
+
+@media (max-width: 900px) {
+  .app-card {
+    grid-template-columns: 1fr;
+  }
+
+  .right-panel {
+    min-height: auto;
+  }
+
+  #qrcode {
+    min-width: 240px;
+    min-height: 240px;
+  }
+}
