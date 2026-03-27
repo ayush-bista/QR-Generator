@@ -3,61 +3,97 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>QRForge | Smart QR Generator</title>
+  <title>QRForge | Advanced QR Generator</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
-  <div class="wrapper">
-    <div class="topbar">
-      <div>
-        <h1>QRForge</h1>
-        <p>Generate beautiful QR codes with custom colors and saved history.</p>
-      </div>
-    </div>
+  <div class="container">
+    <header class="hero">
+      <span class="badge">Day 4 Final Build</span>
+      <h1>QRForge</h1>
+      <p>
+        A modern QR code generator for everyone. Create QR codes for text, URLs, WiFi, and contact details in seconds.
+      </p>
+    </header>
 
-    <div class="dashboard">
-      <section class="panel form-panel">
-        <h2>Create QR Code</h2>
+    <main class="grid">
+      <section class="card builder-card">
+        <h2>Build Your QR</h2>
 
-        <label for="qrInput">Text / URL / Content</label>
-        <textarea id="qrInput" placeholder="Paste your link or content here..."></textarea>
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="text">Text</button>
+          <button class="tab-btn" data-tab="url">URL</button>
+          <button class="tab-btn" data-tab="wifi">WiFi</button>
+          <button class="tab-btn" data-tab="contact">Contact</button>
+        </div>
 
-        <div class="color-row">
+        <div class="tab-content active" id="textTab">
+          <label>Enter Text</label>
+          <textarea id="textValue" placeholder="Write any text here..."></textarea>
+        </div>
+
+        <div class="tab-content" id="urlTab">
+          <label>Enter URL</label>
+          <input type="text" id="urlValue" placeholder="https://example.com" />
+        </div>
+
+        <div class="tab-content" id="wifiTab">
+          <label>WiFi Name (SSID)</label>
+          <input type="text" id="wifiSsid" placeholder="Your WiFi name" />
+
+          <label>Password</label>
+          <input type="text" id="wifiPassword" placeholder="Your WiFi password" />
+
+          <label>Security Type</label>
+          <select id="wifiSecurity">
+            <option value="WPA">WPA/WPA2</option>
+            <option value="WEP">WEP</option>
+            <option value="nopass">No Password</option>
+          </select>
+        </div>
+
+        <div class="tab-content" id="contactTab">
+          <label>Full Name</label>
+          <input type="text" id="contactName" placeholder="John Doe" />
+
+          <label>Phone</label>
+          <input type="text" id="contactPhone" placeholder="+977 98XXXXXXXX" />
+
+          <label>Email</label>
+          <input type="text" id="contactEmail" placeholder="john@example.com" />
+        </div>
+
+        <div class="custom-row">
           <div>
-            <label for="foregroundColor">QR Color</label>
+            <label>QR Color</label>
             <input type="color" id="foregroundColor" value="#111827" />
           </div>
           <div>
-            <label for="backgroundColor">Background</label>
+            <label>Background</label>
             <input type="color" id="backgroundColor" value="#ffffff" />
           </div>
         </div>
 
-        <label for="qrSize">QR Size</label>
+        <label>QR Size</label>
         <input type="range" id="qrSize" min="180" max="320" value="240" />
-        <p class="size-label"><span id="sizeValue">240</span> px</p>
+        <p class="size-text"><span id="sizeValue">240</span> px</p>
 
-        <div class="button-row">
-          <button id="generateBtn" class="primary-btn">Generate</button>
+        <div class="actions">
+          <button id="generateBtn" class="primary-btn">Generate QR</button>
           <button id="downloadBtn" class="success-btn">Download</button>
-          <button id="clearBtn" class="danger-btn">Clear</button>
+          <button id="clearBtn" class="danger-btn">Reset</button>
         </div>
       </section>
 
-      <section class="panel preview-panel">
-        <h2>Preview</h2>
-        <div id="qrPreviewBox">
+      <section class="card preview-card">
+        <h2>Live Preview</h2>
+        <div id="previewBox">
           <div id="qrcode"></div>
         </div>
-        <p id="statusText">Your QR will appear here.</p>
+        <p id="statusText">Generate a QR code to preview it here.</p>
       </section>
-
-      <section class="panel history-panel">
-        <h2>Recent History</h2>
-        <ul id="historyList"></ul>
-      </section>
-    </div>
+    </main>
   </div>
 
   <script src="script.js"></script>
