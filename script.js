@@ -1,51 +1,106 @@
-const qrInput = document.getElementById("qrInput");
+const tabButtons = document.querySelectorAll(".tab-btn");
+const tabContents = document.querySelectorAll(".tab-content");
+
+const generateBtn = document.getElementById("generateBtn");
+const downloadBtn = document.getElementById("downloadBtn");
+const clearBtn = document.getElementById("clearBtn");
+
+const textValue = document.getElementById("textValue");
+const urlValue = document.getElementById("urlValue");
+const wifiSsid = document.getElementById("wifiSsid");
+const wifiPassword = document.getElementById("wifiPassword");
+const wifiSecurity = document.getElementById("wifiSecurity");
+const contactName = document.getElementById("contactName");
+const contactPhone = document.getElementById("contactPhone");
+const contactEmail = document.getElementById("contactEmail");
+
 const foregroundColor = document.getElementById("foregroundColor");
 const backgroundColor = document.getElementById("backgroundColor");
 const qrSize = document.getElementById("qrSize");
 const sizeValue = document.getElementById("sizeValue");
-const generateBtn = document.getElementById("generateBtn");
-const downloadBtn = document.getElementById("downloadBtn");
-const clearBtn = document.getElementById("clearBtn");
 const qrContainer = document.getElementById("qrcode");
-const historyList = document.getElementById("historyList");
 const statusText = document.getElementById("statusText");
 
-sizeValue.textContent = qrSize.value;
+let activeTab = "text";
+
+tabButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    tabButtons.forEach((btn) => btn.classList.remove("active"));
+    tabContents.forEach((tab) => tab.classList.remove("active"));
+
+    button.classList.add("active");
+    activeTab = button.dataset.tab;
+
+    if (activeTab === "text") document.getElementById("textTab").classList.add("active");
+    if (activeTab === "url") document.getElementById("urlTab").classList.add("active");
+    if (activeTab === "wifi") document.getElementById("wifiTab").classList.add("active");
+    if (activeTab === "contact") document.getElementById("contactTab").classList.add("active");
+  });
+});
 
 qrSize.addEventListener("input", () => {
   sizeValue.textContent = qrSize.value;
 });
 
-function updateHistory(value) {
-  const item = document.createElement("li");
-  item.textContent = value.length > 60 ? value.slice(0, 60) + "..." : value;
-  historyList.prepend(item);
-
-  if (historyList.children.length > 6) {
-    historyList.removeChild(historyList.lastChild);
+function getQRData() {
+  if (activeTab === "text") {
+    return textValue.value.trim();
   }
+
+  if (activeTab === "url") {
+    return urlValue.value.trim();
+  }
+
+  if (activeTab === "wifi") {
+    const ssid = wifiSsid.value.trim();
+    const password = wifiPassword.value.trim();
+    const security = wifiSecurity.value;
+
+    return `WIFI:T:${security};S:${ssid};P:${password};;`;
+  }
+
+  if (activeTab === "contact") {
+    const name = contactName.value.trim();
+    const phone = contactPhone.value.trim();
+    const email = contactEmail.value.trim();
+
+    return `BEGIN:VCARD
+VERSION:3.0
+FN:${name}
+TEL:${phone}
+EMAIL:${email}
+END:VCARD`;
+  }
+
+  return "";
 }
 
 function generateQR() {
-  const value = qrInput.value.trim();
+  const qrData = getQRData();
 
-  if (!value) {
-    alert("Please enter some content first.");
-    return;
+  if (!qrData || qrData.includes("S:;") || qrData.includes("FN:")) {
+    if (
+      (activeTab === "text" && !textValue.value.trim()) ||
+      (activeTab === "url" && !urlValue.value.trim()) ||
+      (activeTab === "wifi" && !wifiSsid.value.trim()) ||
+      (activeTab === "contact" && !contactName.value.trim())
+    ) {
+      alert("Please fill the required fields first.");
+      return;
+    }
   }
 
   qrContainer.innerHTML = "";
 
   new QRCode(qrContainer, {
-    text: value,
+    text: qrData,
     width: Number(qrSize.value),
     height: Number(qrSize.value),
     colorDark: foregroundColor.value,
-    colorLight: backgroundColor.value,
+    colorLight: backgroundColor.value
   });
 
-  updateHistory(value);
-  statusText.textContent = "Your customized QR code is ready.";
+  statusText.textContent = "Your QR code is ready to use and download.";
 }
 
 function downloadQR() {
@@ -53,22 +108,28 @@ function downloadQR() {
   const canvas = qrContainer.querySelector("canvas");
 
   if (!img && !canvas) {
-    alert("Generate a QR code first.");
+    alert("Please generate a QR code first.");
     return;
   }
 
   const link = document.createElement("a");
-  link.download = "custom-qr.png";
+  link.download = "qrforge-code.png";
   link.href = img ? img.src : canvas.toDataURL("image/png");
   link.click();
 }
 
-function clearQR() {
-  qrInput.value = "";
+function clearFields() {
+  textValue.value = "";
+  urlValue.value = "";
+  wifiSsid.value = "";
+  wifiPassword.value = "";
+  contactName.value = "";
+  contactPhone.value = "";
+  contactEmail.value = "";
   qrContainer.innerHTML = "";
-  statusText.textContent = "Your QR will appear here.";
+  statusText.textContent = "Generate a QR code to preview it here.";
 }
 
 generateBtn.addEventListener("click", generateQR);
 downloadBtn.addEventListener("click", downloadQR);
-clearBtn.addEventListener("click", clearQR);
+clearBtn.addEventListener("click", clearFields);
